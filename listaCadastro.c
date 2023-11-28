@@ -7,8 +7,9 @@ typedef struct Pessoa
     int id;
     char nome[30];
     int idade;
-    struct Pessoa *prox;  //ponteiro que irar apontar para uma nova pessoa na lista 
-                   //guarda o endereço de memoria da proxima pessoa
+    struct Pessoa *prox;  
+    //ponteiro que irar apontar para uma nova pessoa na lista 
+    //guarda o endereço de memoria da proxima pessoa
 }Pessoa;
 //funcao que cria a lista vazia
 Pessoa* criarListaVazia(){ //iniciar lista vazia
@@ -36,10 +37,10 @@ Pessoa* cadastrar(Pessoa *lista){//chamar funcao que cria pessoas como parametro
     //no endereco de memoria iremos inserir as informacoes
     srand(time(NULL));
     novaPessoa->id = rand() % 100;
-    printf("Digite o nome:");
+    printf("Digite o nome: ");
     fflush(stdin);
     fgets(novaPessoa->nome, sizeof(novaPessoa), stdin);
-    printf("\nDigite a idade:");
+    printf("Digite a idade: ");
     fflush(stdin);
     scanf("%d", &novaPessoa->idade);
 
@@ -50,9 +51,12 @@ Pessoa* cadastrar(Pessoa *lista){//chamar funcao que cria pessoas como parametro
     }else{
         //percorrer a lista ate encontrar quem aponta pra NULL
         //criar um ponteiro auxiliar para percorrer
+        //atual aponta para lista que a 1 pessoa
+        //enquanto o proximo da lista for diferente de NULL
+        //quando atual apontar para NULL inserimos a nova pessoa
 
         Pessoa *atual = lista;
-        while (atual != NULL){
+        while (atual->prox != NULL){
             atual = atual->prox;
         }
 
@@ -60,6 +64,22 @@ Pessoa* cadastrar(Pessoa *lista){//chamar funcao que cria pessoas como parametro
         return lista;
     }
 }
+
+void mostrar(Pessoa *lista){
+    if (lista == NULL){
+        printf("Lista vazia\n");
+    }else{
+        Pessoa *atual = lista;
+        while (atual != NULL){
+            printf("ID: %d\n", atual->id);
+            printf("Nome: %s\n", atual->nome);
+            printf("Idade: %d\n", atual->idade);
+            atual = atual->prox;
+        }
+    }
+}
+
+
 main(){
     
     int opcao;
@@ -77,9 +97,10 @@ main(){
         switch (opcao)
         {
         case 1:
-            cadastrar(lista);
+            lista = cadastrar(lista);
             break;
         case 2:
+            
             break;
         case 3:
             break;
